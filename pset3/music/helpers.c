@@ -2,33 +2,33 @@
 
 #include <cs50.h>
 #include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "helpers.h"
 
-
 // Converts a fraction formatted as X/Y to eighths
-int numer;
-int denom;
-float fract;
+
 int duration(string fraction)
 {
-    // store index 0 and 2 to integer values 'num' and 'denom' repectively use atoi to convert char to int.
-    numer = atoi(fraction[0]);
-    denom = atoi(fraction[2]);
-    // return (numer / denom) / .125
-    fract = numer / denom;
-    return int fract / .125;
+    // store index 0 and 2 to integer values 'numer' and 'denom' repectively.
+    int numer = (fraction[0] -= 48);
+    float denom = (fraction[2] -= 48);
+    float fract = numer /  denom;
+    return fract / .125;
 }
 
 // Calculates frequency (in Hz) of a note
 int frequency(string note)
 {
     // note address will always be at 0
-    // octave address will string lenth -1
+    // octave address will always be at string lenth -1
+    // Adjust Ascii char to int value. Subtrating 48 will set value to the tru int value.
     int octave = note[strlen(note) - 1];
-    octave -= 48; // Adjust Ascii to int value
+    octave -= 48;
 
-    // Determine Frequency of note in the given octive
-    float freq = 0.0;
+    // Determine Frequency of note in the given octave
+    double freq = 0.0;
 
      // Calculate the natural frequency based on note, i.e. not sharp or flat. Octave starts with C.
      // base frequency is calculated as note A at the 4th octave.
@@ -68,7 +68,7 @@ int frequency(string note)
             freq *= 2.0;
         }
     }
-    // If the octave is less than dive by 2.
+    // If the octave is less than 4 dive by 2.
     else if(octave < 4)
     {
         for(int i = 0; i < 4 - octave; i++)
